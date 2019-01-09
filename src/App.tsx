@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'mobx-react';
 import { initalStore } from './stores';
-import TodoListView from './containers/TodoListContainer';
+import TodoListView from './containers/TodoListViewContainer';
 
 import './index.css';
 

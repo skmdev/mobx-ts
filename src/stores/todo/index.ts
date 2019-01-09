@@ -1,4 +1,5 @@
-import { observable, action, computed } from 'mobx';
+import { observable, action, computed, runInAction } from 'mobx';
+import axios from 'axios';
 import Todo from './todo';
 
 class TodoList {
@@ -9,25 +10,37 @@ class TodoList {
   }
 
   @computed
-  public get unfinishedTodoCount() {
-    return this.data.filter((item) => !item.isDone).length;
+  public get completedCount() {
+    return this.data.filter((item) => item.isCompleted).length;
   }
 
   @action
-  public addTodo(name: string) {
-    this.data.push(new Todo(name));
+  public async fetchTodo() {
+    const response = await axios.get(
+      'https://jsonplaceholder.typicode.com/todos'
+    );
+    runInAction(() => {
+      for (const item of response.data) {
+        this.addTodo(item.title, item.completed);
+      }
+    });
   }
 
   @action
-  public deleteTodo(todoIndex: number) {
-    this.data = this.data.filter((_, index) => index !== todoIndex);
+  public addTodo(name: string, isDone: boolean = false) {
+    this.data.unshift(new Todo(name, isDone));
   }
 
   @action
-  public toggleDone(todoIndex: number) {
-    const todo = this.data.find((_, index) => index === todoIndex);
+  public deleteTodo(id: string) {
+    this.data = this.data.filter((item) => item.id !== id);
+  }
+
+  @action
+  public toggleDone(id: string) {
+    const todo = this.data.find((item) => item.id === id);
     if (todo) {
-      todo.setDone(!todo.isDone);
+      todo.setDone(!todo.isCompleted);
     }
   }
 }

@@ -1,27 +1,30 @@
 import React from 'react';
-
+import './index.css';
 interface IProps {
   onDoneClick: () => void;
   onDeleteClick: () => void;
-  name: string;
-  isDone: boolean;
+  todo: {
+    name: string;
+    isCompleted: boolean;
+  };
 }
 
 class TodoItem extends React.PureComponent<IProps> {
   render() {
+    console.log(this.props.todo.name);
     return (
-      <div>
+      <div className="todo-item">
         <label>
           <input
             onChange={this.props.onDoneClick}
             type="checkbox"
             name="done"
-            defaultChecked={this.props.isDone}
+            defaultChecked={this.props.todo.isCompleted}
           />
-          done?
+          Completed?
         </label>
 
-        {this.props.name}
+        {this.props.todo.name}
         <button onClick={this.props.onDeleteClick}>delete</button>
       </div>
     );

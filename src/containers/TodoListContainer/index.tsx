@@ -1,4 +1,4 @@
 import { inject, observer } from 'mobx-react';
-import TodoListView from '../../components/TodoListView';
+import TodoList from '../../components/TodoList';
 
-export default inject('todoList')(observer(TodoListView));
+export default inject('todoList')(observer(TodoList));

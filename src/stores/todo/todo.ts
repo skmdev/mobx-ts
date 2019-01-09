@@ -1,15 +1,19 @@
 import { observable, action } from 'mobx';
+const uuidv1 = require('uuid/v1');
 
 class Todo {
-  @observable public isDone: boolean = false;
+  public id: string;
+  @observable public isCompleted: boolean = false;
   @observable public name: string;
-  constructor(name: string) {
+  constructor(name: string, isCompleted: boolean = false) {
+    this.id = uuidv1();
     this.name = name;
+    this.isCompleted = isCompleted;
   }
 
   @action
-  public setDone(isDone: boolean) {
-    this.isDone = isDone;
+  public setDone(isCompleted: boolean) {
+    this.isCompleted = isCompleted;
   }
 }
 
