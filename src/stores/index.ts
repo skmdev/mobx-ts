@@ -1,4 +1,4 @@
-import { configure } from 'mobx';
+import { configure, autorun, toJS } from 'mobx';
 import TodoList from './todo';
 
 // Ensure every changes is done by action
@@ -17,4 +17,11 @@ export function initalStore() {
     };
   }
   return store;
+}
+
+export function autoSave(store: any, save: any) {
+  autorun(() => {
+    const json = toJS(store);
+    save(json);
+  });
 }

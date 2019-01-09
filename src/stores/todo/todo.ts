@@ -5,8 +5,12 @@ class Todo {
   public id: string;
   @observable public isCompleted: boolean = false;
   @observable public name: string;
-  constructor(name: string, isCompleted: boolean = false) {
-    this.id = uuidv1();
+  constructor(
+    name: string,
+    isCompleted: boolean = false,
+    id: string = uuidv1()
+  ) {
+    this.id = id;
     this.name = name;
     this.isCompleted = isCompleted;
   }

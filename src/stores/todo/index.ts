@@ -1,13 +1,31 @@
-import { observable, action, computed, runInAction } from 'mobx';
+import { observable, action, computed, runInAction, toJS } from 'mobx';
 import axios from 'axios';
 import Todo from './todo';
+import { autoSave } from '../';
 
 class TodoList {
   @observable public data: Array<Todo> = [];
 
   constructor() {
-    this.addTodo('default task');
+    this.load();
+    autoSave(this, this.save);
   }
+
+  @action
+  private load() {
+    const data = localStorage.getItem('data');
+    if (data) {
+      const dataJson = JSON.parse(data);
+      this.data = dataJson.map(
+        (item: any) => new Todo(item.name, item.isCompleted)
+      );
+    }
+  }
+
+  private save = (json: any) => {
+    const { data } = json;
+    localStorage.setItem('data', JSON.stringify(data));
+  };
 
   @computed
   public get completedCount() {
