@@ -11,7 +11,6 @@ interface IProps {
 
 class TodoItem extends React.PureComponent<IProps> {
   render() {
-    console.log(this.props.todo.name);
     return (
       <div className="todo-item">
         <label>

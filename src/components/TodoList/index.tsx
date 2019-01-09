@@ -7,7 +7,7 @@ interface IProps extends IStore {}
 class TodoList extends React.Component<IProps> {
   render() {
     return (
-      <div>
+      <React.Fragment>
         {this.props.todoList!.data.map((item) => (
           <TodoItem
             key={item.id}
@@ -20,7 +20,7 @@ class TodoList extends React.Component<IProps> {
             }}
           />
         ))}
-      </div>
+      </React.Fragment>
     );
   }
 }
