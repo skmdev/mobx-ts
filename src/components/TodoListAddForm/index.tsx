@@ -32,6 +32,7 @@ class TodoListAddForm extends React.PureComponent<IProps> {
           value={this.state.todoName}
           onChange={this.handleInputChange}
         />
+        <button type="submit">Submit</button>
       </form>
     );
   }
